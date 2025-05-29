@@ -22,6 +22,11 @@ const Index = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleStockSelect = (stock: string) => {
+    console.log('Stock selection received in Index:', stock);
+    setSelectedStock(stock);
+  };
+
   const marketStatus = {
     isOpen: currentTime.getHours() >= 9 && currentTime.getHours() < 16,
     nextOpen: currentTime.getHours() >= 16 ? 'Tomorrow 9:15 AM' : 'Today 9:15 AM',
@@ -48,7 +53,7 @@ const Index = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <SearchBar onStockSelect={setSelectedStock} />
+              <SearchBar onStockSelect={handleStockSelect} />
               <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
                 <Bell className="h-5 w-5" />
               </Button>
@@ -62,6 +67,14 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
+        {/* Selected Stock Indicator */}
+        <div className="mb-4">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-4 py-2 inline-block">
+            <span className="text-white text-sm">Currently viewing: </span>
+            <span className="text-green-400 font-bold text-lg">{selectedStock}</span>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Market Overview */}
           <div className="lg:col-span-4">
@@ -80,11 +93,11 @@ const Index = () => {
 
               <TabsContent value="overview" className="space-y-6">
                 <StockChart selectedStock={selectedStock} />
-                <StockList onStockSelect={setSelectedStock} selectedStock={selectedStock} />
+                <StockList onStockSelect={handleStockSelect} selectedStock={selectedStock} />
               </TabsContent>
 
               <TabsContent value="stocks">
-                <StockList onStockSelect={setSelectedStock} selectedStock={selectedStock} />
+                <StockList onStockSelect={handleStockSelect} selectedStock={selectedStock} />
               </TabsContent>
 
               <TabsContent value="sectors">
