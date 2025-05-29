@@ -1,7 +1,6 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp, TrendingDown } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const SectorAnalysis = () => {
   const sectorData = [
@@ -94,11 +93,7 @@ const SectorAnalysis = () => {
                   }}
                   formatter={(value: any) => [`${value.toFixed(2)}%`, 'Change']}
                 />
-                <Bar 
-                  dataKey="change" 
-                  fill={(entry: any) => entry.change >= 0 ? '#10b981' : '#ef4444'}
-                  radius={[4, 4, 0, 0]}
-                >
+                <Bar dataKey="change" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.change >= 0 ? '#10b981' : '#ef4444'} />
                   ))}
